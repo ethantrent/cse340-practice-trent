@@ -31,13 +31,16 @@ app.set('views', path.join(__dirname, 'src/views'));
  * Declare Routes
  */
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'src/views/home.html'));
+    const title = 'Welcome Home';
+    res.render('home', { title });
 });
 app.get('/about', (req, res) => {
-    res.sendFile(path.join(__dirname, 'src/views/about.html'));
+    const title = 'About Me';
+    res.render('about', { title });
 });
 app.get('/products', (req, res) => {
-    res.sendFile(path.join(__dirname, 'src/views/products.html'));
+    const title = 'Our Products';
+    res.render('products', { title });
 });
 
 
