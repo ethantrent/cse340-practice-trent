@@ -80,17 +80,47 @@ app.use((req, res, next) => {
     next();
 });
 
-/**
- * Global template variables middleware
- * 
- * Makes common variables available to all EJS templates without having to pass
- * them individually from each route handler
- */
+// Request logging middleware
 app.use((req, res, next) => {
-    // Make NODE_ENV available to all templates
-    res.locals.NODE_ENV = NODE_ENV.toLowerCase() || 'production';
+    console.log(`${req.method} ${req.url}`);
+    next(); // Pass control to the next middleware or route
+});
 
-    // Continue to the next middleware or route handler
+// Middleware to add global data to all templates
+app.use((req, res, next) => {
+    // Add current year for copyright
+    res.locals.currentYear = new Date().getFullYear();
+    next();
+});
+
+// Global middleware for time-based greeting
+app.use((req, res, next) => {
+    const currentHour = new Date().getHours();
+    let greeting;
+    
+    if (currentHour < 12) {
+        greeting = '<p>Good morning! Have a wonderful day ahead.</p>';
+    } else if (currentHour < 18) {
+        greeting = '<p>Good afternoon! Hope your day is going well.</p>';
+    } else {
+        greeting = '<p>Good evening! Hope you had a great day.</p>';
+    }
+    
+    res.locals.greeting = greeting;
+    next();
+});
+
+// Global middleware for random theme selection
+app.use((req, res, next) => {
+    const themes = ['blue-theme', 'green-theme', 'red-theme'];
+    const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+    res.locals.bodyClass = randomTheme;
+    next();
+});
+
+// Global middleware to share query parameters with templates
+app.use((req, res, next) => {
+    res.locals.queryParams = req.query;
     next();
 });
 
@@ -157,6 +187,20 @@ app.get('/catalog/:courseId', (req, res, next) => {
         title: `${course.id} - ${course.title}`,
         course: { ...course, sections: sortedSections },
         currentSort: sortBy
+    });
+});
+
+// Route-specific middleware that sets custom headers
+const addDemoHeaders = (req, res, next) => {
+    res.setHeader('X-Demo-Page', 'true');
+    res.setHeader('X-Middleware-Demo', 'This header was added by route-specific middleware!');
+    next();
+};
+
+// Demo page route with header middleware
+app.get('/demo', addDemoHeaders, (req, res) => {
+    res.render('demo', {
+        title: 'Middleware Demo Page'
     });
 });
 
