@@ -1,0 +1,35 @@
+<%- include('../partials/header') %>
+<main class="faculty-container">
+    <h1><%= title %></h1>
+    
+    <div class="sort-controls">
+        <p>Sort by:</p>
+        <div class="sort-buttons">
+            <a href="/faculty?sort=name" class="sort-btn <%= currentSort === 'name' ? 'active' : '' %>">Name</a>
+            <a href="/faculty?sort=department" class="sort-btn <%= currentSort === 'department' ? 'active' : '' %>">Department</a>
+            <a href="/faculty?sort=title" class="sort-btn <%= currentSort === 'title' ? 'active' : '' %>">Title</a>
+        </div>
+    </div>
+
+    <div class="faculty-grid">
+        <% facultyList.forEach(member => { %>
+            <div class="faculty-card">
+                <div class="faculty-header">
+                    <h2><a href="/faculty/<%= member.id %>"><%= member.name %></a></h2>
+                    <p class="faculty-title"><%= member.title %></p>
+                </div>
+                <div class="faculty-info">
+                    <p><strong>Department:</strong> <%= member.department %></p>
+                    <p><strong>Office:</strong> <%= member.office %></p>
+                    <p><strong>Email:</strong> <a href="mailto:<%= member.email %>"><%= member.email %></a></p>
+                </div>
+                <div class="faculty-actions">
+                    <a href="/faculty/<%= member.id %>" class="view-profile-btn">View Full Profile</a>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+    
+    <p class="back-link"><a href="/">&larr; Back to Home</a></p>
+</main>
+<%- include('../partials/footer') %>
