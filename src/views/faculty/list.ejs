@@ -15,7 +15,7 @@
         <% facultyList.forEach(member => { %>
             <div class="faculty-card">
                 <div class="faculty-header">
-                    <h2><a href="/faculty/<%= member.id %>"><%= member.name %></a></h2>
+                    <h2><a href="/faculty/<%= member.slug %>"><%= member.name %></a></h2>
                     <p class="faculty-title"><%= member.title %></p>
                 </div>
                 <div class="faculty-info">
@@ -24,7 +24,7 @@
                     <p><strong>Email:</strong> <a href="mailto:<%= member.email %>"><%= member.email %></a></p>
                 </div>
                 <div class="faculty-actions">
-                    <a href="/faculty/<%= member.id %>" class="view-profile-btn">View Full Profile</a>
+                    <a href="/faculty/<%= member.slug %>" class="view-profile-btn">View Full Profile</a>
                 </div>
             </div>
         <% }); %>

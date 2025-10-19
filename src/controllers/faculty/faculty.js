@@ -1,36 +1,45 @@
-import { getFacultyById, getSortedFaculty } from '../../models/faculty/faculty.js';
+import { getFacultyBySlug, getSortedFaculty } from '../../models/faculty/faculty.js';
 
 // Route handler for the faculty list page
-const facultyListPage = (req, res) => {
-    // Get sort parameter from query string, default to 'name'
-    const sortBy = req.query.sort || 'name';
-    
-    // Get sorted faculty array
-    const facultyList = getSortedFaculty(sortBy);
-    
-    res.render('faculty/list', {
-        title: 'Faculty Directory',
-        facultyList: facultyList,
-        currentSort: sortBy
-    });
+const facultyListPage = async (req, res, next) => {
+    try {
+        // Default to sorting by name if no valid sort option is provided
+        const validSortOptions = ['name', 'department', 'title'];
+        const sortBy = validSortOptions.includes(req.query.sort) ? req.query.sort : 'name';
+
+        // Fetch sorted faculty list
+        const facultyList = await getSortedFaculty(sortBy);
+
+        res.render('faculty/list', {
+            title: 'Faculty Directory',
+            currentSort: sortBy,
+            facultyList
+        });
+    } catch (error) {
+        return next(error);
+    }
 };
 
 // Route handler for individual faculty detail pages
-const facultyDetailPage = (req, res, next) => {
-    const facultyId = req.params.facultyId;
-    const faculty = getFacultyById(facultyId);
-    
-    // If faculty doesn't exist, create 404 error
-    if (!faculty) {
-        const err = new Error(`Faculty member ${facultyId} not found`);
-        err.status = 404;
-        return next(err);
+const facultyDetailPage = async (req, res, next) => {
+    try {
+        const facultySlug = req.params.facultyId;
+        const facultyMember = await getFacultyBySlug(facultySlug);
+
+        // Handle case where faculty member is not found
+        if (!facultyMember || Object.keys(facultyMember).length === 0) {
+            const err = new Error('Faculty Member Not Found');
+            err.status = 404;
+            return next(err);
+        }
+
+        res.render('faculty/detail', {
+            title: facultyMember.name,
+            facultyMember
+        });
+    } catch (error) {
+        return next(error);
     }
-    
-    res.render('faculty/detail', {
-        title: `${faculty.name} - Faculty Profile`,
-        faculty: faculty
-    });
 };
 
 export { facultyListPage, facultyDetailPage };

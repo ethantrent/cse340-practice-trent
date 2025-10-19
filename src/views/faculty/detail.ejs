@@ -2,9 +2,9 @@
 <main class="faculty-detail-container">
     <div class="faculty-profile">
         <div class="profile-header">
-            <h1><%= faculty.name %></h1>
-            <p class="profile-title"><%= faculty.title %></p>
-            <p class="profile-department"><%= faculty.department %></p>
+            <h1><%= facultyMember.name %></h1>
+            <p class="profile-title"><%= facultyMember.title %></p>
+            <p class="profile-department"><%= facultyMember.department %></p>
         </div>
         
         <div class="profile-details">
@@ -13,15 +13,15 @@
                 <div class="detail-grid">
                     <div class="detail-item">
                         <strong>Office:</strong>
-                        <span><%= faculty.office %></span>
+                        <span><%= facultyMember.office %></span>
                     </div>
                     <div class="detail-item">
                         <strong>Phone:</strong>
-                        <span><a href="tel:<%= faculty.phone %>"><%= faculty.phone %></a></span>
+                        <span><a href="tel:<%= facultyMember.phone %>"><%= facultyMember.phone %></a></span>
                     </div>
                     <div class="detail-item">
                         <strong>Email:</strong>
-                        <span><a href="mailto:<%= faculty.email %>"><%= faculty.email %></a></span>
+                        <span><a href="mailto:<%= facultyMember.email %>"><%= facultyMember.email %></a></span>
                     </div>
                 </div>
             </div>
@@ -31,11 +31,11 @@
                 <div class="detail-grid">
                     <div class="detail-item">
                         <strong>Department:</strong>
-                        <span><%= faculty.department %></span>
+                        <span><%= facultyMember.department %></span>
                     </div>
                     <div class="detail-item">
                         <strong>Position:</strong>
-                        <span><%= faculty.title %></span>
+                        <span><%= facultyMember.title %></span>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
         
         <div class="profile-actions">
             <a href="/faculty" class="btn-secondary">&larr; Back to Faculty Directory</a>
-            <a href="mailto:<%= faculty.email %>" class="btn-primary">Send Email</a>
+            <a href="mailto:<%= facultyMember.email %>" class="btn-primary">Send Email</a>
         </div>
     </div>
 </main>
