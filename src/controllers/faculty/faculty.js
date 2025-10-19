@@ -1,5 +1,12 @@
 import { getFacultyBySlug, getSortedFaculty } from '../../models/faculty/faculty.js';
 
+/**
+ * Helper function to add styles specific to the faculty pages only
+ */
+const addFacultySpecificStyles = (res) => {
+    res.addStyle('<link rel="stylesheet" href="/css/faculty.css">');
+};
+
 // Route handler for the faculty list page
 const facultyListPage = async (req, res, next) => {
     try {
@@ -10,6 +17,7 @@ const facultyListPage = async (req, res, next) => {
         // Fetch sorted faculty list
         const facultyList = await getSortedFaculty(sortBy);
 
+        addFacultySpecificStyles(res);
         res.render('faculty/list', {
             title: 'Faculty Directory',
             currentSort: sortBy,
@@ -33,6 +41,7 @@ const facultyDetailPage = async (req, res, next) => {
             return next(err);
         }
 
+        addFacultySpecificStyles(res);
         res.render('faculty/detail', {
             title: facultyMember.name,
             facultyMember

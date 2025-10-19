@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 
 // Import MVC components
 import routes from './src/controllers/routes.js';
-import { addImportantLocalVariables, addOptionalLocalVariables } from './src/middleware/global.js';
+import globalMiddleware from './src/middleware/global.js';
 import { setupDatabase, testConnection } from './src/models/setup.js';
 
 /**
@@ -30,8 +30,7 @@ app.set('views', path.join(__dirname, 'src/views'));
 /**
  * Global Middleware
  */
-app.use(addImportantLocalVariables);
-app.use(addOptionalLocalVariables);
+app.use(globalMiddleware);
 
 /**
  * Routes
