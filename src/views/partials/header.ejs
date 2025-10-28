@@ -32,6 +32,19 @@
                 <li><a href="/catalog">Course Catalog</a></li>
                 <li><a href="/faculty">Faculty Directory</a></li>
                 <li><a href="/demo">Middleware Demo</a></li>
+                <br>
+                <li><a href="/contact">Contact Us</a></li>
+                <% if (isLoggedIn) { %>
+                    <!-- Navigation for logged-in users -->
+                    <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="/users">All Users</a></li>
+                    <li><a href="/contact/responses">Contact Responses</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                <% } else { %>
+                    <!-- Navigation for anonymous users -->
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/register">Register</a></li>
+                <% } %>
             </ul>
         </nav>
     </header>
