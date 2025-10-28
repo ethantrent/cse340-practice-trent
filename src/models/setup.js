@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import db from './db.js';
+import setupPracticeDatabase from './practice-setup.js';
 
 // Catalog data as array
 const catalog = [
@@ -1538,6 +1539,8 @@ const setupDatabase = async() => {
         // Skip everything if schema + last seed rows are present
         if (await isAlreadyInitialized(verbose)) {
             if (verbose) console.log('DB already initialized — skipping setup.');
+            // Even if core tables are initialized, run practice setup
+            await setupPracticeDatabase(verbose);
             return true;
         }
 
@@ -1566,6 +1569,9 @@ const setupDatabase = async() => {
         for (const facultyMember of faculty) {
             await insertFaculty(facultyMember, verbose);
         }
+
+        // 5) Practice database tables (like contact_form)
+        await setupPracticeDatabase(verbose);
 
         if (verbose) {
             console.log('Database setup complete');
