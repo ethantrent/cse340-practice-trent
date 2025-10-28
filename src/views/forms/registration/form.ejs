@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <%- renderStyles() %>
+</head>
+<body>
+    <%- include('../../partials/header') %>
+    
+    <main>
+        <div class="registration-form">
+            <h1><%= title %></h1>
+            <p>
+                Register for a new account by providing your information below. All fields are required and passwords must meet security requirements.
+            </p>
+            
+            <% if (typeof success !== 'undefined' && success) { %>
+                <div class="success-message">
+                    <%= success %>
+                </div>
+            <% } %>
+            
+            <% if (errors && errors.length > 0) { %>
+                <div class="error-message">
+                    <p>Please correct the following errors:</p>
+                    <ul>
+                        <% errors.forEach(error => { %>
+                            <li><%= error.msg %></li>
+                        <% }) %>
+                    </ul>
+                </div>
+            <% } %>
+            
+            <form action="/register" method="POST" id="registrationForm">
+                <div class="form-group">
+                    <label for="name">Full Name:</label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        name="name" 
+                        value="<%= formData.name %>"
+                        placeholder="Enter your full name"
+                        required
+                        minlength="7"
+                    >
+                    <div class="help-text">Minimum 7 characters</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address:</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        value="<%= formData.email %>"
+                        placeholder="your.email@example.com"
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmEmail">Confirm Email Address:</label>
+                    <input 
+                        type="email" 
+                        id="confirmEmail" 
+                        name="confirmEmail" 
+                        value="<%= formData.confirmEmail %>"
+                        placeholder="Confirm your email address"
+                        required
+                    >
+                    <div class="help-text">Must match email address above</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        placeholder="Create a secure password"
+                        required
+                        minlength="8"
+                        pattern="(?=.*[0-9])(?=.*[!@#$%^&*]).*"
+                    >
+                    <div class="help-text">Minimum 8 characters, must include at least one number and one symbol (!@#$%^&*)</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input 
+                        type="password" 
+                        id="confirmPassword" 
+                        name="confirmPassword" 
+                        placeholder="Confirm your password"
+                        required
+                        minlength="8"
+                    >
+                    <div class="help-text">Must match password above</div>
+                </div>
+                
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </main>
+    
+    <%- include('../../partials/footer') %>
+</body>
+</html>
