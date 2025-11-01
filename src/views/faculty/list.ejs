@@ -14,7 +14,7 @@
     <div class="faculty-grid">
         <% facultyList.forEach(member => { %>
             <div class="faculty-card">
-                <img src="/images/faculty/<%= member.slug %>.jpg" alt="<%= member.name %>" class="faculty-photo">
+                <img src="/images/faculty-images/<%= member.slug %>.jpg" alt="<%= member.name %>" class="faculty-photo">
                 <div class="faculty-header">
                     <h2><a href="/faculty/<%= member.slug %>"><%= member.name %></a></h2>
                     <p class="faculty-title"><%= member.title %></p>
