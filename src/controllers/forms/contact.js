@@ -1,4 +1,4 @@
-import { body, validationResult } from 'express-validator';
+import { validationResult } from 'express-validator';
 import { saveContactForm, getAllContactForms } from '../../models/forms/contact.js';
 
 /**
@@ -8,22 +8,6 @@ import { saveContactForm, getAllContactForms } from '../../models/forms/contact.
 const addContactSpecificStyles = (res) => {
     res.addStyle('contact');
 };
-
-/**
- * Validation rules for contact form
- */
-const contactValidation = [
-    body('subject')
-        .trim()
-        .isLength({ min: 3 })
-        .withMessage('Subject must be at least 3 characters long')
-        .notEmpty()
-        .withMessage('Subject is required'),
-    body('message')
-        .trim()
-        .notEmpty()
-        .withMessage('Message is required')
-];
 
 /**
  * Show the contact form
@@ -102,4 +86,4 @@ const showContactResponses = async (req, res) => {
     }
 };
 
-export { contactValidation, showContactForm, processContactForm, showContactResponses };
+export { showContactForm, processContactForm, showContactResponses };

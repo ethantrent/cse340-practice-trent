@@ -4,12 +4,16 @@ import { Router } from 'express';
 import { addDemoHeaders } from '../middleware/demo/headers.js';
 import { requireLogin, requireRole } from '../middleware/auth.js';
 
+// Import validation middleware
+import { contactValidation } from '../middleware/validation/contact.js';
+import { registrationValidation, updateAccountValidation } from '../middleware/validation/registration.js';
+import { loginValidation } from '../middleware/validation/login.js';
+
 // Import controllers
 import { catalogPage, courseDetailPage } from './catalog/catalog.js';
 import { facultyListPage, facultyDetailPage } from './faculty/faculty.js';
 import { homePage, aboutPage, demoPage, testErrorPage } from './index.js';
 import { 
-    contactValidation, 
     showContactForm, 
     processContactForm, 
     showContactResponses 
@@ -18,8 +22,6 @@ import {
     showRegistrationForm, 
     processRegistration, 
     showAllUsers, 
-    registrationValidation,
-    updateAccountValidation,
     showEditAccountForm,
     processEditAccount,
     processDeleteAccount
@@ -28,8 +30,7 @@ import {
     showLoginForm, 
     processLogin, 
     processLogout, 
-    showDashboard, 
-    loginValidation 
+    showDashboard 
 } from './forms/login.js';
 
 // Create a new router instance
