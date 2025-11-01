@@ -9,9 +9,16 @@ import bcrypt from 'bcrypt';
 const findUserByEmail = async (email) => {
     try {
         const query = `
-            SELECT id, name, email, password, created_at
+            SELECT 
+                users.id, 
+                users.name, 
+                users.email, 
+                users.password, 
+                users.created_at,
+                roles.role_name
             FROM users
-            WHERE LOWER(email) = LOWER($1)
+            INNER JOIN roles ON users.role_id = roles.id
+            WHERE LOWER(users.email) = LOWER($1)
             LIMIT 1
         `;
         const result = await db.query(query, [email]);

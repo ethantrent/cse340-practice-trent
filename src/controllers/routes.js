@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 // Import middleware
 import { addDemoHeaders } from '../middleware/demo/headers.js';
-import { requireLogin } from '../middleware/auth.js';
+import { requireLogin, requireRole } from '../middleware/auth.js';
 
 // Import controllers
 import { catalogPage, courseDetailPage } from './catalog/catalog.js';
@@ -18,7 +18,11 @@ import {
     showRegistrationForm, 
     processRegistration, 
     showAllUsers, 
-    registrationValidation 
+    registrationValidation,
+    updateAccountValidation,
+    showEditAccountForm,
+    processEditAccount,
+    processDeleteAccount
 } from './forms/registration.js';
 import { 
     showLoginForm, 
@@ -52,6 +56,11 @@ router.get('/contact/responses', showContactResponses);
 router.get('/register', showRegistrationForm);
 router.post('/register', registrationValidation, processRegistration);
 router.get('/users', showAllUsers);
+
+// Account management routes
+router.get('/users/:id/edit', requireLogin, showEditAccountForm);
+router.post('/users/:id/update', requireLogin, updateAccountValidation, processEditAccount);
+router.post('/users/:id/delete', requireRole('admin'), processDeleteAccount);
 
 // Authentication routes
 router.get('/login', showLoginForm);

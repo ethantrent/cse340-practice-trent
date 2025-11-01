@@ -23,6 +23,11 @@
 <% } %>
 </head>
 <body class="<%= bodyClass %>">
+    <% if (flash) { %>
+        <div class="flash-message flash-<%= flash.type %>">
+            <%= flash.message %>
+        </div>
+    <% } %>
     <header>
         <%- greeting %>
         <nav>

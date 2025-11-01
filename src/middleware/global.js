@@ -38,6 +38,16 @@ const setLocalVariables = (req, res) => {
     if (req.session && req.session.user) {
         res.locals.isLoggedIn = true;
     }
+
+    // Make session available to templates
+    res.locals.session = req.session || {};
+
+    // Handle flash messages (display once then clear)
+    res.locals.flash = null;
+    if (req.session && req.session.flash) {
+        res.locals.flash = req.session.flash;
+        delete req.session.flash; // Remove flash message after retrieving it
+    }
 };
 
 /**
